@@ -1,22 +1,62 @@
-<!DOCTYPE html>
-<html lang="en-US">
+<!doctype html>
+<html lang="en">
 <head>
-<title>Conclave</title>
-<link rel="stylesheet" href="main.css" />
-<script src="jquery-min.js"></script>
-<script src="main.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Conclave — a lightweight, accessible carousel powered by CSS transitions and vanilla JavaScript.">
+  <title>Conclave — A little perspective.</title>
+  <link rel="stylesheet" href="src/conclave.css">
+  <link rel="stylesheet" href="main.css">
+  <script src="src/conclave.js" defer></script>
+  <script src="main.js" defer></script>
 </head>
 <body>
-
-<div id="wrapper_ads"></div>
-<div id="wrapper_bu">
-<div id="bu1"><p class="txt_Center txt_h1">1</p></div>
-<div id="bu2"><p class="txt_Center txt_h1">2</p></div>
-<div id="bu3"><p class="txt_Center txt_h1">3</p></div>
-<div id="bu4"><p class="txt_Center txt_h1">4</p></div>
-<div id="bu5"><p class="txt_Center txt_h1">5</p></div>
-</div>
-<script>Conclave.auto()</script>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Conclave home"><span class="brand-mark" aria-hidden="true">◒</span> conclave<span class="brand-period">.</span></a>
+    <a class="source-link" href="https://github.com/goudam-jm/CSSSlider">View on GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="heading">
+      <p class="eyebrow"><span></span> A STUDY IN MOTION · EST. 2013 / REIMAGINED</p>
+      <h1 id="heading">A little <em>perspective.</em></h1>
+      <p class="intro-copy">Five places to get lost. One simple way to find your way.</p>
+    </section>
+    <section class="carousel" aria-roledescription="carousel" aria-label="Places to pause">
+      <div class="stage" id="stage" data-conclave-track>
+        <button class="slide" data-conclave-slide data-index="0" aria-label="Show slide 1: The quiet desert">
+          <span class="landscape desert" aria-hidden="true"><i class="sun"></i><i class="ridge back"></i><i class="ridge front"></i><i class="grain"></i></span>
+          <span class="slide-top">35° N / 05° W <span>01 — STILLNESS</span></span>
+          <span class="slide-copy"><span class="slide-kicker">MOROCCO</span><span class="slide-title">The quiet<br>desert.</span><span class="slide-description">Find a little space in the endless.</span></span>
+        </button>
+        <button class="slide" data-conclave-slide data-index="1" aria-label="Show slide 2: Into the blue">
+          <span class="landscape ocean" aria-hidden="true"><i class="sun"></i><i class="ridge back"></i><i class="ridge front"></i><i class="grain"></i></span>
+          <span class="slide-top">36° N / 25° E <span>02 — WANDER</span></span>
+          <span class="slide-copy"><span class="slide-kicker">AEGEAN SEA</span><span class="slide-title">Into<br>the blue.</span><span class="slide-description">Follow the horizon a little further.</span></span>
+        </button>
+        <button class="slide" data-conclave-slide data-index="2" aria-label="Slide 3: Above it all">
+          <span class="landscape mountain" aria-hidden="true"><i class="sun"></i><i class="ridge back"></i><i class="ridge front"></i><i class="grain"></i></span>
+          <span class="slide-top">46° N / 09° E <span>03 — PERSPECTIVE</span></span>
+          <span class="slide-copy"><span class="slide-kicker">THE SWISS ALPS</span><span class="slide-title">Above<br>it all.</span><span class="slide-description">Some things become clearer from here.</span></span>
+        </button>
+        <button class="slide" data-conclave-slide data-index="3" aria-label="Show slide 4: Take the slow road">
+          <span class="landscape forest" aria-hidden="true"><i class="sun"></i><i class="ridge back"></i><i class="ridge front"></i><i class="grain"></i></span>
+          <span class="slide-top">45° N / 122° W <span>04 — UNWIND</span></span>
+          <span class="slide-copy"><span class="slide-kicker">PACIFIC NORTHWEST</span><span class="slide-title">Take the<br>slow road.</span><span class="slide-description">There is no rush to be somewhere else.</span></span>
+        </button>
+        <button class="slide" data-conclave-slide data-index="4" aria-label="Show slide 5: After the light">
+          <span class="landscape dusk" aria-hidden="true"><i class="sun"></i><i class="ridge back"></i><i class="ridge front"></i><i class="grain"></i></span>
+          <span class="slide-top">64° N / 19° W <span>05 — WONDER</span></span>
+          <span class="slide-copy"><span class="slide-kicker">ICELAND</span><span class="slide-title">After<br>the light.</span><span class="slide-description">Stay for the part that comes next.</span></span>
+        </button>
+      </div>
+      <div class="controls">
+        <div class="slide-count"><span id="current" data-conclave-current>03</span><span class="count-line"></span><span data-conclave-total>05</span></div>
+        <div class="pagination" data-conclave-pagination role="group" aria-label="Choose a slide"></div>
+        <div class="navigation"><button id="play" data-conclave-play aria-label="Start automatic slideshow" aria-pressed="false"><span class="play-icon" aria-hidden="true"></span></button><span class="control-divider"></span><button id="previous" data-conclave-prev aria-label="Previous slide">←</button><button id="next" data-conclave-next aria-label="Next slide">→</button></div>
+      </div>
+    </section>
+    <div class="footnote"><span>DRAG TO EXPLORE <span aria-hidden="true">↔</span> OR USE YOUR ARROW KEYS</span><span>LESS CODE. MORE MOVEMENT.</span></div>
+  </main>
+  <footer><span>Small footprint. Open possibilities.</span><span>CSS transitions + vanilla JavaScript <span class="footer-dot">●</span> Zero dependencies</span></footer>
 </body>
-
 </html>

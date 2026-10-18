@@ -1,0 +1,47 @@
+/* Conclave layout. Customize these properties on each .conclave instance. */
+.conclave {
+  --conclave-height: 410px;
+  --conclave-slide-width: 48%;
+  --conclave-radius: 7px;
+  --conclave-duration: 700ms;
+  --conclave-easing: cubic-bezier(.22,.75,.2,1);
+  --conclave-accent: #76845e;
+  --conclave-dot: #cbd0c2;
+}
+.conclave__track {
+  position: relative;
+  isolation: isolate;
+  height: calc(var(--conclave-height) + 30px);
+  overflow: hidden;
+  touch-action: pan-y;
+}
+.conclave__slide {
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  width: var(--conclave-slide-width);
+  height: var(--conclave-height);
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--conclave-radius);
+  transform-origin: center;
+  transition: transform var(--conclave-duration) var(--conclave-easing), filter var(--conclave-duration), opacity var(--conclave-duration);
+}
+.conclave__slide[data-conclave-position="0"] { transform: translateX(-50%); z-index: 5; }
+.conclave__slide[data-conclave-position="-1"] { transform: translateX(-110%) scale(.85); filter: brightness(.72); z-index: 3; }
+.conclave__slide[data-conclave-position="1"] { transform: translateX(10%) scale(.85); filter: brightness(.72); z-index: 3; }
+.conclave__slide[data-conclave-position="-2"] { transform: translateX(-157%) scale(.7); filter: brightness(.62); z-index: 1; }
+.conclave__slide[data-conclave-position="2"] { transform: translateX(57%) scale(.7); filter: brightness(.62); z-index: 1; }
+.conclave__slide[data-conclave-position="-3"], .conclave__slide[data-conclave-position="3"] { opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) scale(.5); }
+.conclave__dot { border: 0; background: transparent; padding: 14px 3px; cursor: pointer; }
+.conclave__dot::after { content: ''; display: block; width: 5px; height: 5px; border-radius: 20px; background: var(--conclave-dot); transition: width var(--conclave-duration); }
+.conclave__dot[aria-current="true"]::after { width: 24px; background: var(--conclave-accent); }
+.conclave :where(button, a, [tabindex]):focus-visible, .conclave:focus-visible { outline: 3px solid var(--conclave-accent); outline-offset: 4px; }
+.conclave__status { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 700px) {
+  .conclave { --conclave-slide-width: 78%; --conclave-height: 375px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .conclave__slide, .conclave__dot::after { transition: none; }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "conclave-carousel",
+  "version": "0.1.0",
+  "description": "A dependency-free perspective carousel with CSS transitions and configurable controls.",
+  "main": "src/conclave.js",
+  "exports": {
+    ".": {
+      "require": "./src/conclave.js",
+      "import": "./src/conclave.mjs"
+    },
+    "./conclave.css": "./src/conclave.css"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "check": "node --check src/conclave.js && node --check src/conclave.mjs && node --check main.js",
+    "build": "node scripts/build.mjs",
+    "prepack": "npm run build && npm run check"
+  },
+  "keywords": [
+    "carousel",
+    "slider",
+    "css",
+    "vanilla-javascript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goudam-jm/CSSSlider.git"
+  },
+  "license": "MIT",
+  "homepage": "https://goudam-jm.github.io/CSSSlider/"
+}

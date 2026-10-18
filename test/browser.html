@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Conclave browser tests</title>
+<link rel="stylesheet" href="../src/conclave.css">
+<h1>Conclave browser tests</h1>
+<pre id="results">Running…</pre>
+<div id="fixtures"></div>
+<script src="../src/conclave.js"></script>
+<script>
+(async () => {
+  const output = document.querySelector('#results');
+  const results = [];
+  let failed = 0;
+  function assert(value, message) { if (!value) throw new Error(message); }
+  function fixture(count) {
+    const root = document.createElement('section');
+    root.innerHTML = `<div data-conclave-track>${Array.from({length: count}, (_, i) => `<article data-conclave-slide><input aria-label="Input ${i}">${i}</article>`).join('')}</div><button data-conclave-prev>Previous</button><button data-conclave-next>Next</button><button data-conclave-play>Play</button><div data-conclave-pagination></div><span data-conclave-current>original</span><span data-conclave-total>total</span>`;
+    document.querySelector('#fixtures').append(root);
+    return root;
+  }
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+  async function test(name, run) {
+    try { await run(); results.push(`PASS ${name}`); }
+    catch (error) { failed++; results.push(`FAIL ${name}: ${error.message}`); }
+    output.textContent = results.join('\n');
+  }
+  await test('one, two, even and large slide counts; arbitrary index wrapping', () => {
+    for (const count of [1, 2, 4, 5, 8]) {
+      const root = fixture(count); const carousel = new Conclave(root);
+      carousel.goTo(-101);
+      assert(carousel.index === ((-101 % count) + count) % count, 'negative wrap');
+      carousel.goTo(100);
+      assert(carousel.index === 100 % count, 'positive wrap');
+      const positions = carousel.slides.map(el => Number(el.dataset.conclavePosition));
+      assert(positions.filter(position => position === 0).length === 1, 'one active card');
+      assert(root.querySelectorAll('.conclave__dot').length === count, 'correct pagination');
+      carousel.destroy(); root.remove();
+    }
+  });
+  await test('instances, controls, events and non-loop boundaries are isolated', () => {
+    const a = fixture(3), b = fixture(6);
+    const first = new Conclave(a, {loop: false}), second = new Conclave(b, {startIndex: 4});
+    let detail; a.addEventListener('conclave:change', event => detail = event.detail);
+    a.querySelector('[data-conclave-next]').click();
+    assert(first.index === 1 && second.index === 4, 'instance isolation');
+    assert(detail.index === 1 && detail.previousIndex === 0, 'event detail');
+    first.goTo(999); assert(first.index === 2 && a.querySelector('[data-conclave-next]').disabled, 'end bound');
+    first.goTo(-99); assert(first.index === 0 && a.querySelector('[data-conclave-prev]').disabled, 'start bound');
+    first.destroy(); second.destroy(); a.remove(); b.remove();
+  });
+  await test('keyboard ignores editable fields, supports End/Home', () => {
+    const root = fixture(4), carousel = new Conclave(root);
+    root.dispatchEvent(new KeyboardEvent('keydown', {key: 'End', bubbles: true}));
+    assert(carousel.index === 3, 'End');
+    root.querySelector('input').dispatchEvent(new KeyboardEvent('keydown', {key:'Home', bubbles:true}));
+    assert(carousel.index === 3, 'editable ignored');
+    root.dispatchEvent(new KeyboardEvent('keydown', {key:'Home', bubbles:true}));
+    assert(carousel.index === 0, 'Home');
+    carousel.destroy(); root.remove();
+  });
+  await test('swipe advances once and suppresses follow-up click', () => {
+    const root = fixture(3), carousel = new Conclave(root);
+    carousel.slides[0].dispatchEvent(new PointerEvent('pointerdown', {bubbles:true, isPrimary:true, button:0, clientX:200, clientY:20}));
+    window.dispatchEvent(new PointerEvent('pointerup', {isPrimary:true, clientX:100, clientY:20}));
+    carousel.slides[0].click(); assert(carousel.index === 1, 'swipe not undone by click');
+    carousel.destroy(); root.remove();
+  });
+  await test('play, pause, hover and focus suspension; destroy cancels timers', async () => {
+    const root = fixture(3), carousel = new Conclave(root, {interval:30});
+    carousel.play(); await wait(45); assert(carousel.index === 1, 'autoplay advances');
+    carousel.pause(); const paused = carousel.index; await wait(45); assert(carousel.index === paused, 'pause');
+    root.dispatchEvent(new MouseEvent('mouseenter')); carousel.play(); await wait(45); assert(carousel.index === paused, 'hover pause');
+    root.dispatchEvent(new MouseEvent('mouseleave')); root.querySelector('input').focus(); await wait(45); assert(carousel.index === paused, 'focus pause');
+    carousel.destroy(); await wait(45); assert(carousel.index === paused, 'destroy cancels timers'); root.remove();
+  });
+  await test('destroy restores markup; reinitialize without duplicate listeners', () => {
+    const root = fixture(3), before = root.outerHTML;
+    const carousel = new Conclave(root); carousel.next(); carousel.destroy(); carousel.destroy();
+    assert(root.outerHTML === before, 'original markup restored');
+    const next = new Conclave(root); root.querySelector('[data-conclave-next]').click(); assert(next.index === 1, 'single handler after reinit');
+    next.destroy(); root.remove();
+  });
+  await test('invalid configurations and duplicate initialization fail clearly', () => {
+    const root = fixture(2);
+    for (const options of [{interval:0}, {startIndex:1.5}, {swipeThreshold:-1}]) {
+      let threw = false; try { new Conclave(root, options); } catch { threw = true; } assert(threw, 'invalid configuration rejected');
+    }
+    const carousel = new Conclave(root); let threw = false;
+    try { new Conclave(root); } catch { threw = true; } assert(threw, 'duplicate rejected');
+    carousel.destroy(); root.remove();
+  });
+  output.textContent += `\n\n${results.length - failed}/${results.length} passed`;
+  document.title = failed ? 'FAIL — Conclave tests' : 'PASS — Conclave tests';
+})();
+</script>
+</html>

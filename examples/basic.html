@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conclave — minimal integration</title>
+<link rel="stylesheet" href="../src/conclave.css">
+<style>
+  body { max-width: 900px; margin: 40px auto; padding: 16px; font: 16px system-ui; }
+  .example { --conclave-height: 260px; --conclave-accent: #6752bb; }
+  .card { display: grid; place-items: center; background: #d8d2f0; color: #302548; padding: 24px; }
+  .card:nth-child(even) { background: #b7d9cc; }
+  .controls { display: flex; align-items: center; justify-content: center; gap: 16px; }
+</style>
+<h1>Your content. A little perspective.</h1>
+<section class="example" aria-label="Example cards">
+  <div data-conclave-track>
+    <article class="card" data-conclave-slide><h2>One</h2><p>Use ordinary HTML for your slides.</p></article>
+    <article class="card" data-conclave-slide><h2>Two</h2><a href="../index.html">Visit the demo</a></article>
+    <article class="card" data-conclave-slide><h2>Three</h2><p>Style them however you like.</p></article>
+  </div>
+  <div class="controls">
+    <button data-conclave-prev>Previous</button>
+    <div data-conclave-pagination aria-label="Choose slide" role="group"></div>
+    <button data-conclave-next>Next</button>
+  </div>
+</section>
+<script type="module">
+  import Conclave from '../src/conclave.mjs';
+  const carousel = new Conclave('.example', { loop: false });
+</script>
+</html>
