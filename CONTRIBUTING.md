@@ -1,6 +1,6 @@
 # Contributing
 
-To try the carousel, use the [live demo](https://goudam-jm.github.io/CSSSlider/) or [minimal example](https://goudam-jm.github.io/CSSSlider/examples/basic.html). The steps below are for changing the code.
+To try the carousel, use the [live demo](https://goudam-jm.github.io/Conclave/) or [minimal example](https://goudam-jm.github.io/Conclave/examples/basic.html). The steps below are for changing the code.
 
 ## Local development
 
@@ -18,6 +18,6 @@ The browser suite covers variable counts, looping and boundaries, instance isola
 
 ## Demo hosting
 
-GitHub Pages serves the repository root from `master`. The committed `.nojekyll` file disables Jekyll processing; all assets use relative paths compatible with `/CSSSlider/`. No build service or custom deployment workflow is required. Updates to `master` automatically update the demo.
+GitHub Pages serves the repository root from `master`. The committed `.nojekyll` file disables Jekyll processing; all assets use relative paths compatible with `/Conclave/`. No build service or custom deployment workflow is required. Updates to `master` automatically update the demo.
 
 The demo consumes `src/conclave.js` and `src/conclave.css` directly. Keep site-specific artwork and typography in `main.css`.

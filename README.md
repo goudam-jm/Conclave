@@ -1,8 +1,8 @@
-# Conclave / CSSSlider
+# Conclave
 
 A reusable perspective carousel with CSS transitions and a small, dependency-free JavaScript controller. Bring your own HTML and styling. The landscape site in `index.html` is the demo, built with the same public library.
 
-[Live demo](https://goudam-jm.github.io/CSSSlider/) · [Minimal example](https://goudam-jm.github.io/CSSSlider/examples/basic.html)
+[Live demo](https://goudam-jm.github.io/Conclave/) · [Minimal example](https://goudam-jm.github.io/Conclave/examples/basic.html)
 
 No installation is needed to try the carousel.
 
@@ -39,7 +39,7 @@ Initialize after the markup exists. Use an element or selector. Each instance is
 
 Slides can contain text, images, links, and other HTML. Use an `article` or `div` when containing interactive elements; never put links or inputs inside a slide that is itself a button. Add meaningful `aria-label` values to slides when appropriate. Render slide content in HTML before initialization. To change the slide collection later, call `destroy()`, edit the markup, then initialize again.
 
-See the [minimal working integration](https://goudam-jm.github.io/CSSSlider/examples/basic.html) or copy `examples/basic.html` from this repository.
+See the [minimal working integration](https://goudam-jm.github.io/Conclave/examples/basic.html) or copy `examples/basic.html` from this repository.
 
 ## Modules and packaging
 
