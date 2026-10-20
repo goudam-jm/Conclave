@@ -6,7 +6,24 @@ A reusable perspective carousel with CSS transitions and a small, dependency-fre
 
 No installation is needed to try the carousel.
 
-## Quick start
+## Install
+
+```sh
+npm install conclave-carousel
+```
+
+With a bundler:
+
+```js
+import Conclave from 'conclave-carousel';
+import 'conclave-carousel/conclave.css';
+
+const carousel = new Conclave('.gallery', { loop: true });
+```
+
+Initialize after your carousel markup exists. See the markup and options below.
+
+## Quick start without a bundler
 
 Copy `src/conclave.css` and `src/conclave.js` into your project:
 
@@ -50,14 +67,14 @@ import Conclave from './src/conclave.mjs';
 const gallery = new Conclave(document.querySelector('.gallery'));
 ```
 
-Package exports support ESM, CommonJS and the CSS entry point. After installing a local checkout or tarball, bundlers can use:
+Package exports support ESM, CommonJS and the CSS entry point. Bundlers can use:
 
 ```js
 import Conclave from 'conclave-carousel';
 import 'conclave-carousel/conclave.css';
 ```
 
-The package is prepared locally; it has not been published to npm. `npm pack` builds the ESM entry from the canonical `src/conclave.js` and runs syntax checks. No runtime dependencies or consumer build step are required. Importing the constructor is safe in Node; constructing a carousel requires a browser DOM.
+The npm package includes the browser script, ESM entry, CSS, and MIT license. `npm pack` builds the ESM entry from the canonical `src/conclave.js` and runs syntax checks. No runtime dependencies or consumer build step are required. Importing the constructor is safe in Node; constructing a carousel requires a browser DOM.
 
 ## Options
 

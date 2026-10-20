@@ -27,8 +27,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/goudam-jm/Conclave.git"
+    "url": "git+https://github.com/goudam-jm/Conclave.git"
   },
   "license": "MIT",
-  "homepage": "https://goudam-jm.github.io/Conclave/"
+  "homepage": "https://goudam-jm.github.io/Conclave/",
+  "bugs": {
+    "url": "https://github.com/goudam-jm/Conclave/issues"
+  }
 }
